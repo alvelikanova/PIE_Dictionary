@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PIE_Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="ID_Branch" />
+          </Key>
+          <Property Name="ID_Branch" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Sign" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_branch_parent" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Dictionary_conformity">
+          <Key>
+            <PropertyRef Name="ID_Dictionary_conformity" />
+          </Key>
+          <Property Name="ID_Dictionary_conformity" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_Vocabulary_entry" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Number_string" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_Language" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Phorma" Type="nvarchar" MaxLength="50" />
+          <Property Name="Variant" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_00" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_1" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_2" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_3" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_4" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_5" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_6" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_7" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_8" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_9" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_10" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_11" Type="nvarchar" MaxLength="50" />
+          <Property Name="p_0" Type="nvarchar" MaxLength="50" />
+          <Property Name="Meaning" Type="nvarchar(max)" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID_Language" />
+          </Key>
+          <Property Name="ID_Language" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Sign" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID_Branch" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Phoneme">
+          <Key>
+            <PropertyRef Name="ID_Phoneme" />
+          </Key>
+          <Property Name="ID_Phoneme" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Record" Type="nvarchar" MaxLength="50" />
+          <Property Name="Transcrip" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phoneme_desc" Type="nvarchar(max)" />
+          <Property Name="Vowel_consonant" Type="bit" />
+          <Property Name="Reconsr" Type="bit" />
+        </EntityType>
+        <EntityType Name="Phonetic_matching">
+          <Key>
+            <PropertyRef Name="ID_Phonetic_matching" />
+          </Key>
+          <Property Name="ID_Phonetic_matching" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_Phoneme_PIE" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_Phoneme_language" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_Language" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID_Rule" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+          <Property Name="Сonfidence_level" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="ID_Rule" />
+          </Key>
+          <Property Name="ID_Rule" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Rule_desc" Type="nvarchar(max)" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Vocabulary_entry">
+          <Key>
+            <PropertyRef Name="ID_Vocabulary_entry" />
+          </Key>
+          <Property Name="ID_Vocabulary_entry" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Number_vocabulary_entry" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Lemma" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Branch_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Branch1" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="ID_Branch" />
+            </Principal>
+            <Dependent Role="Branch1">
+              <PropertyRef Name="ID_branch_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionary_conformity_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dictionary_conformity" Type="Self.Dictionary_conformity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID_Language" />
+            </Principal>
+            <Dependent Role="Dictionary_conformity">
+              <PropertyRef Name="ID_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionary_conformity_Vocabulary_entry">
+          <End Role="Vocabulary_entry" Type="Self.Vocabulary_entry" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dictionary_conformity" Type="Self.Dictionary_conformity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vocabulary_entry">
+              <PropertyRef Name="ID_Vocabulary_entry" />
+            </Principal>
+            <Dependent Role="Dictionary_conformity">
+              <PropertyRef Name="ID_Vocabulary_entry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Language_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Language" Type="Self.Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="ID_Branch" />
+            </Principal>
+            <Dependent Role="Language">
+              <PropertyRef Name="ID_Branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID_Language" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Phoneme">
+          <End Role="Phoneme" Type="Self.Phoneme" Multiplicity="0..1" />
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phoneme">
+              <PropertyRef Name="ID_Phoneme" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Phoneme_PIE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Phoneme1">
+          <End Role="Phoneme" Type="Self.Phoneme" Multiplicity="0..1" />
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phoneme">
+              <PropertyRef Name="ID_Phoneme" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Phoneme_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Rule">
+          <End Role="Rule" Type="Self.Rule" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rule">
+              <PropertyRef Name="ID_Rule" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Rule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PIE_ModelContainer">
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dictionary_conformity" EntityType="Self.Dictionary_conformity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phoneme" EntityType="Self.Phoneme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phonetic_matching" EntityType="Self.Phonetic_matching" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rule" EntityType="Self.Rule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vocabulary_entry" EntityType="Self.Vocabulary_entry" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Branch_Branch" Association="Self.FK_Branch_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Branch1" EntitySet="Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionary_conformity_Language" Association="Self.FK_Dictionary_conformity_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Dictionary_conformity" EntitySet="Dictionary_conformity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionary_conformity_Vocabulary_entry" Association="Self.FK_Dictionary_conformity_Vocabulary_entry">
+            <End Role="Vocabulary_entry" EntitySet="Vocabulary_entry" />
+            <End Role="Dictionary_conformity" EntitySet="Dictionary_conformity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Language_Branch" Association="Self.FK_Language_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Language" EntitySet="Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Language" Association="Self.FK_Phonetic_matching_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Phoneme" Association="Self.FK_Phonetic_matching_Phoneme">
+            <End Role="Phoneme" EntitySet="Phoneme" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Phoneme1" Association="Self.FK_Phonetic_matching_Phoneme1">
+            <End Role="Phoneme" EntitySet="Phoneme" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Rule" Association="Self.FK_Phonetic_matching_Rule">
+            <End Role="Rule" EntitySet="Rule" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PIE_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="ID_Branch" />
+          </Key>
+          <Property Name="ID_Branch" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_branch_parent" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Branch1" Relationship="Self.FK_Branch_Branch" FromRole="Branch" ToRole="Branch1" />
+          <NavigationProperty Name="Branch2" Relationship="Self.FK_Branch_Branch" FromRole="Branch1" ToRole="Branch" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Language_Branch" FromRole="Branch" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="Dictionary_conformity">
+          <Key>
+            <PropertyRef Name="ID_Dictionary_conformity" />
+          </Key>
+          <Property Name="ID_Dictionary_conformity" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_Vocabulary_entry" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Number_string" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_Language" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Phorma" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Variant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_00" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_5" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_7" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_9" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_11" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="p_0" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Meaning" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Dictionary_conformity_Language" FromRole="Dictionary_conformity" ToRole="Language" />
+          <NavigationProperty Name="Vocabulary_entry" Relationship="Self.FK_Dictionary_conformity_Vocabulary_entry" FromRole="Dictionary_conformity" ToRole="Vocabulary_entry" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="ID_Language" />
+          </Key>
+          <Property Name="ID_Language" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Branch" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Language_Branch" FromRole="Language" ToRole="Branch" />
+          <NavigationProperty Name="Dictionary_conformity" Relationship="Self.FK_Dictionary_conformity_Language" FromRole="Language" ToRole="Dictionary_conformity" />
+          <NavigationProperty Name="Phonetic_matching" Relationship="Self.FK_Phonetic_matching_Language" FromRole="Language" ToRole="Phonetic_matching" />
+        </EntityType>
+        <EntityType Name="Phoneme">
+          <Key>
+            <PropertyRef Name="ID_Phoneme" />
+          </Key>
+          <Property Name="ID_Phoneme" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Record" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Transcrip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phoneme_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Vowel_consonant" Type="Boolean" />
+          <Property Name="Reconsr" Type="Boolean" />
+          <NavigationProperty Name="Phonetic_matching" Relationship="Self.FK_Phonetic_matching_Phoneme" FromRole="Phoneme" ToRole="Phonetic_matching" />
+          <NavigationProperty Name="Phonetic_matching1" Relationship="Self.FK_Phonetic_matching_Phoneme1" FromRole="Phoneme" ToRole="Phonetic_matching" />
+        </EntityType>
+        <EntityType Name="Phonetic_matching">
+          <Key>
+            <PropertyRef Name="ID_Phonetic_matching" />
+          </Key>
+          <Property Name="ID_Phonetic_matching" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ID_Phoneme_PIE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_Phoneme_language" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_Language" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ID_Rule" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Сonfidence_level" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Phonetic_matching_Language" FromRole="Phonetic_matching" ToRole="Language" />
+          <NavigationProperty Name="Phoneme" Relationship="Self.FK_Phonetic_matching_Phoneme" FromRole="Phonetic_matching" ToRole="Phoneme" />
+          <NavigationProperty Name="Phoneme1" Relationship="Self.FK_Phonetic_matching_Phoneme1" FromRole="Phonetic_matching" ToRole="Phoneme" />
+          <NavigationProperty Name="Rule" Relationship="Self.FK_Phonetic_matching_Rule" FromRole="Phonetic_matching" ToRole="Rule" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="ID_Rule" />
+          </Key>
+          <Property Name="ID_Rule" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Rule_desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Phonetic_matching" Relationship="Self.FK_Phonetic_matching_Rule" FromRole="Rule" ToRole="Phonetic_matching" />
+        </EntityType>
+        <EntityType Name="Vocabulary_entry">
+          <Key>
+            <PropertyRef Name="ID_Vocabulary_entry" />
+          </Key>
+          <Property Name="ID_Vocabulary_entry" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Number_vocabulary_entry" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Lemma" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Dictionary_conformity" Relationship="Self.FK_Dictionary_conformity_Vocabulary_entry" FromRole="Vocabulary_entry" ToRole="Dictionary_conformity" />
+        </EntityType>
+        <Association Name="FK_Branch_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Branch1" Type="Self.Branch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="ID_Branch" />
+            </Principal>
+            <Dependent Role="Branch1">
+              <PropertyRef Name="ID_branch_parent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Language_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Language" Type="Self.Language" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="ID_Branch" />
+            </Principal>
+            <Dependent Role="Language">
+              <PropertyRef Name="ID_Branch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionary_conformity_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dictionary_conformity" Type="Self.Dictionary_conformity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID_Language" />
+            </Principal>
+            <Dependent Role="Dictionary_conformity">
+              <PropertyRef Name="ID_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dictionary_conformity_Vocabulary_entry">
+          <End Role="Vocabulary_entry" Type="Self.Vocabulary_entry" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dictionary_conformity" Type="Self.Dictionary_conformity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vocabulary_entry">
+              <PropertyRef Name="ID_Vocabulary_entry" />
+            </Principal>
+            <Dependent Role="Dictionary_conformity">
+              <PropertyRef Name="ID_Vocabulary_entry" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="ID_Language" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Phoneme">
+          <End Role="Phoneme" Type="Self.Phoneme" Multiplicity="0..1" />
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phoneme">
+              <PropertyRef Name="ID_Phoneme" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Phoneme_PIE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Phoneme1">
+          <End Role="Phoneme" Type="Self.Phoneme" Multiplicity="0..1" />
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phoneme">
+              <PropertyRef Name="ID_Phoneme" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Phoneme_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Phonetic_matching_Rule">
+          <End Role="Rule" Type="Self.Rule" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Phonetic_matching" Type="Self.Phonetic_matching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rule">
+              <PropertyRef Name="ID_Rule" />
+            </Principal>
+            <Dependent Role="Phonetic_matching">
+              <PropertyRef Name="ID_Rule" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PIE_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Branch" EntityType="Self.Branch" />
+          <EntitySet Name="Dictionary_conformity" EntityType="Self.Dictionary_conformity" />
+          <EntitySet Name="Language" EntityType="Self.Language" />
+          <EntitySet Name="Phoneme" EntityType="Self.Phoneme" />
+          <EntitySet Name="Phonetic_matching" EntityType="Self.Phonetic_matching" />
+          <EntitySet Name="Rule" EntityType="Self.Rule" />
+          <EntitySet Name="Vocabulary_entry" EntityType="Self.Vocabulary_entry" />
+          <AssociationSet Name="FK_Branch_Branch" Association="Self.FK_Branch_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Branch1" EntitySet="Branch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Language_Branch" Association="Self.FK_Language_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Language" EntitySet="Language" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionary_conformity_Language" Association="Self.FK_Dictionary_conformity_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Dictionary_conformity" EntitySet="Dictionary_conformity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dictionary_conformity_Vocabulary_entry" Association="Self.FK_Dictionary_conformity_Vocabulary_entry">
+            <End Role="Vocabulary_entry" EntitySet="Vocabulary_entry" />
+            <End Role="Dictionary_conformity" EntitySet="Dictionary_conformity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Language" Association="Self.FK_Phonetic_matching_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Phoneme" Association="Self.FK_Phonetic_matching_Phoneme">
+            <End Role="Phoneme" EntitySet="Phoneme" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Phoneme1" Association="Self.FK_Phonetic_matching_Phoneme1">
+            <End Role="Phoneme" EntitySet="Phoneme" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Phonetic_matching_Rule" Association="Self.FK_Phonetic_matching_Rule">
+            <End Role="Rule" EntitySet="Rule" />
+            <End Role="Phonetic_matching" EntitySet="Phonetic_matching" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PIE_ModelContainer" CdmEntityContainer="PIE_Entities">
+          <EntitySetMapping Name="Branch">
+            <EntityTypeMapping TypeName="PIE_Model.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="ID_Branch" ColumnName="ID_Branch" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="ID_branch_parent" ColumnName="ID_branch_parent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dictionary_conformity">
+            <EntityTypeMapping TypeName="PIE_Model.Dictionary_conformity">
+              <MappingFragment StoreEntitySet="Dictionary_conformity">
+                <ScalarProperty Name="ID_Dictionary_conformity" ColumnName="ID_Dictionary_conformity" />
+                <ScalarProperty Name="ID_Vocabulary_entry" ColumnName="ID_Vocabulary_entry" />
+                <ScalarProperty Name="Number_string" ColumnName="Number_string" />
+                <ScalarProperty Name="ID_Language" ColumnName="ID_Language" />
+                <ScalarProperty Name="Phorma" ColumnName="Phorma" />
+                <ScalarProperty Name="Variant" ColumnName="Variant" />
+                <ScalarProperty Name="p_00" ColumnName="p_00" />
+                <ScalarProperty Name="p_1" ColumnName="p_1" />
+                <ScalarProperty Name="p_2" ColumnName="p_2" />
+                <ScalarProperty Name="p_3" ColumnName="p_3" />
+                <ScalarProperty Name="p_4" ColumnName="p_4" />
+                <ScalarProperty Name="p_5" ColumnName="p_5" />
+                <ScalarProperty Name="p_6" ColumnName="p_6" />
+                <ScalarProperty Name="p_7" ColumnName="p_7" />
+                <ScalarProperty Name="p_8" ColumnName="p_8" />
+                <ScalarProperty Name="p_9" ColumnName="p_9" />
+                <ScalarProperty Name="p_10" ColumnName="p_10" />
+                <ScalarProperty Name="p_11" ColumnName="p_11" />
+                <ScalarProperty Name="p_0" ColumnName="p_0" />
+                <ScalarProperty Name="Meaning" ColumnName="Meaning" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Language">
+            <EntityTypeMapping TypeName="PIE_Model.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="ID_Language" ColumnName="ID_Language" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sign" ColumnName="Sign" />
+                <ScalarProperty Name="ID_Branch" ColumnName="ID_Branch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phoneme">
+            <EntityTypeMapping TypeName="PIE_Model.Phoneme">
+              <MappingFragment StoreEntitySet="Phoneme">
+                <ScalarProperty Name="ID_Phoneme" ColumnName="ID_Phoneme" />
+                <ScalarProperty Name="Record" ColumnName="Record" />
+                <ScalarProperty Name="Transcrip" ColumnName="Transcrip" />
+                <ScalarProperty Name="Phoneme_desc" ColumnName="Phoneme_desc" />
+                <ScalarProperty Name="Vowel_consonant" ColumnName="Vowel_consonant" />
+                <ScalarProperty Name="Reconsr" ColumnName="Reconsr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phonetic_matching">
+            <EntityTypeMapping TypeName="PIE_Model.Phonetic_matching">
+              <MappingFragment StoreEntitySet="Phonetic_matching">
+                <ScalarProperty Name="ID_Phonetic_matching" ColumnName="ID_Phonetic_matching" />
+                <ScalarProperty Name="ID_Phoneme_PIE" ColumnName="ID_Phoneme_PIE" />
+                <ScalarProperty Name="ID_Phoneme_language" ColumnName="ID_Phoneme_language" />
+                <ScalarProperty Name="ID_Language" ColumnName="ID_Language" />
+                <ScalarProperty Name="ID_Rule" ColumnName="ID_Rule" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Сonfidence_level" ColumnName="Сonfidence_level" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rule">
+            <EntityTypeMapping TypeName="PIE_Model.Rule">
+              <MappingFragment StoreEntitySet="Rule">
+                <ScalarProperty Name="ID_Rule" ColumnName="ID_Rule" />
+                <ScalarProperty Name="Rule_desc" ColumnName="Rule_desc" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vocabulary_entry">
+            <EntityTypeMapping TypeName="PIE_Model.Vocabulary_entry">
+              <MappingFragment StoreEntitySet="Vocabulary_entry">
+                <ScalarProperty Name="ID_Vocabulary_entry" ColumnName="ID_Vocabulary_entry" />
+                <ScalarProperty Name="Number_vocabulary_entry" ColumnName="Number_vocabulary_entry" />
+                <ScalarProperty Name="Lemma" ColumnName="Lemma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
